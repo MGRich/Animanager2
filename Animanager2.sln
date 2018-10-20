@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Animanager2", "Animanager2\Animanager2.csproj", "{A8E65229-E8B7-4EDE-B529-0346241E5C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnimanagerFormat", "AnimanagerFormat\AnimanagerFormat.csproj", "{3DA55660-D200-4296-8D12-267C3DD552E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8E65229-E8B7-4EDE-B529-0346241E5C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E65229-E8B7-4EDE-B529-0346241E5C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E65229-E8B7-4EDE-B529-0346241E5C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E65229-E8B7-4EDE-B529-0346241E5C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA55660-D200-4296-8D12-267C3DD552E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA55660-D200-4296-8D12-267C3DD552E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA55660-D200-4296-8D12-267C3DD552E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA55660-D200-4296-8D12-267C3DD552E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80BD816B-A073-4DC3-9319-39FC11E99AB6}
+	EndGlobalSection
+EndGlobal
