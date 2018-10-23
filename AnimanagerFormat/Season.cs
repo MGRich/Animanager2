@@ -6,6 +6,7 @@
         public Episode[] episodes;
         public Anime anime;
         public float progress = 0;
+        public byte id = 0;
 
         public Season(Episode e)
         {

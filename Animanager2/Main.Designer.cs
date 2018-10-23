@@ -40,15 +40,21 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.addBox = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.okButton = new System.Windows.Forms.Button();
             this.addText = new System.Windows.Forms.TextBox();
             this.episodeRB = new System.Windows.Forms.RadioButton();
             this.seasonRB = new System.Windows.Forms.RadioButton();
             this.animeRB = new System.Windows.Forms.RadioButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.imageBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.infoLabel3 = new System.Windows.Forms.Label();
+            this.infoLabel2 = new System.Windows.Forms.Label();
+            this.infoLabel1 = new System.Windows.Forms.Label();
+            this.imageButton = new System.Windows.Forms.Button();
+            this.imageText = new System.Windows.Forms.TextBox();
             this.addBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openButton
@@ -155,7 +161,7 @@
             // 
             // addBox
             // 
-            this.addBox.Controls.Add(this.button1);
+            this.addBox.Controls.Add(this.okButton);
             this.addBox.Controls.Add(this.addText);
             this.addBox.Controls.Add(this.episodeRB);
             this.addBox.Controls.Add(this.seasonRB);
@@ -167,15 +173,15 @@
             this.addBox.TabStop = false;
             this.addBox.Text = "Add";
             // 
-            // button1
+            // okButton
             // 
-            this.button1.Location = new System.Drawing.Point(167, 62);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(33, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.add);
+            this.okButton.Location = new System.Drawing.Point(167, 62);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(33, 23);
+            this.okButton.TabIndex = 4;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.add);
             // 
             // addText
             // 
@@ -216,18 +222,22 @@
             this.animeRB.Text = "Anime";
             this.animeRB.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // imageBox
             // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(203, 108);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(431, 234);
-            this.pictureBox1.TabIndex = 20;
-            this.pictureBox1.TabStop = false;
+            this.imageBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.imageBox.Location = new System.Drawing.Point(203, 99);
+            this.imageBox.Name = "imageBox";
+            this.imageBox.Size = new System.Drawing.Size(431, 225);
+            this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imageBox.TabIndex = 20;
+            this.imageBox.TabStop = false;
+            this.imageBox.Visible = false;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.infoLabel3);
+            this.groupBox1.Controls.Add(this.infoLabel2);
+            this.groupBox1.Controls.Add(this.infoLabel1);
             this.groupBox1.Location = new System.Drawing.Point(416, 349);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(216, 89);
@@ -235,13 +245,60 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
             // 
+            // infoLabel3
+            // 
+            this.infoLabel3.AutoSize = true;
+            this.infoLabel3.Location = new System.Drawing.Point(6, 66);
+            this.infoLabel3.Name = "infoLabel3";
+            this.infoLabel3.Size = new System.Drawing.Size(0, 13);
+            this.infoLabel3.TabIndex = 2;
+            // 
+            // infoLabel2
+            // 
+            this.infoLabel2.AutoSize = true;
+            this.infoLabel2.Location = new System.Drawing.Point(6, 43);
+            this.infoLabel2.Name = "infoLabel2";
+            this.infoLabel2.Size = new System.Drawing.Size(0, 13);
+            this.infoLabel2.TabIndex = 1;
+            // 
+            // infoLabel1
+            // 
+            this.infoLabel1.AutoSize = true;
+            this.infoLabel1.Location = new System.Drawing.Point(6, 20);
+            this.infoLabel1.Name = "infoLabel1";
+            this.infoLabel1.Size = new System.Drawing.Size(90, 13);
+            this.infoLabel1.TabIndex = 0;
+            this.infoLabel1.Text = "Nothing selected.";
+            // 
+            // imageButton
+            // 
+            this.imageButton.Enabled = false;
+            this.imageButton.Location = new System.Drawing.Point(536, 329);
+            this.imageButton.Name = "imageButton";
+            this.imageButton.Size = new System.Drawing.Size(90, 22);
+            this.imageButton.TabIndex = 22;
+            this.imageButton.Text = "Set Image Path";
+            this.imageButton.UseVisualStyleBackColor = true;
+            this.imageButton.Visible = false;
+            this.imageButton.Click += new System.EventHandler(this.setImagePath);
+            // 
+            // imageText
+            // 
+            this.imageText.Location = new System.Drawing.Point(467, 330);
+            this.imageText.Name = "imageText";
+            this.imageText.Size = new System.Drawing.Size(63, 20);
+            this.imageText.TabIndex = 23;
+            this.imageText.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 450);
+            this.Controls.Add(this.imageText);
+            this.Controls.Add(this.imageButton);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.imageBox);
             this.Controls.Add(this.addBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -258,7 +315,9 @@
             this.Text = "Form1";
             this.addBox.ResumeLayout(false);
             this.addBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,13 +336,18 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox addBox;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TextBox addText;
         private System.Windows.Forms.RadioButton episodeRB;
         private System.Windows.Forms.RadioButton seasonRB;
         private System.Windows.Forms.RadioButton animeRB;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox imageBox;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label infoLabel3;
+        private System.Windows.Forms.Label infoLabel2;
+        private System.Windows.Forms.Label infoLabel1;
+        private System.Windows.Forms.Button imageButton;
+        private System.Windows.Forms.TextBox imageText;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using AnimanagerFormat;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace Animanager2
         {
             Episode ep = ase[app[node.Parent.Parent.Text]][node.Text];
             ep.watched ^= true;
+            infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
             node.ForeColor = ep.watched ? Color.Green : Color.Red;
             progressBar3.Value = (int)ep.season.recalculateProgress();
             progressBar2.Value = (int)ep.anime.recalculateProgress();
@@ -60,28 +62,85 @@ namespace Animanager2
 
         private void selectNode(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Level == 2)
+            Episode ep = null;
+            Season se = null;
+            Anime a = null;
+            int c = 0;
+            switch (e.Node.Level)
             {
-                Episode ep = ase[app[e.Node.Parent.Parent.Text]][e.Node.Text];
-                progressBar3.Value = (int)ep.season.recalculateProgress();
-                progressBar2.Value = (int)ep.anime.recalculateProgress();
-                label4.Text = (int)ep.anime.progress + "%";
-                label5.Text = (int)ep.season.progress + "%";
+                case 2:
+                    ep = ase[app[e.Node.Parent.Parent.Text]][e.Node.Text];
+                    progressBar3.Value = (int)ep.season.recalculateProgress();
+                    progressBar2.Value = (int)ep.anime.recalculateProgress();
+                    label4.Text = (int)ep.anime.progress + "%";
+                    label5.Text = (int)ep.season.progress + "%";
+                    infoLabel1.Text = "Anime: " + ep.anime.name;
+                    infoLabel2.Text = "Season: " + ep.season.name;
+                    infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
+                    c = 2;
+                    break;
+
+                case 1:
+                    se = ase[app[e.Node.Parent.Text]][e.Node.Nodes[0].Text].season;
+                    progressBar3.Value = (int)se.recalculateProgress();
+                    progressBar2.Value = (int)se.anime.recalculateProgress();
+                    label4.Text = (int)se.anime.progress + "%";
+                    label5.Text = (int)se.progress + "%";
+                    infoLabel1.Text = "Anime: " + se.anime.name;
+                    infoLabel2.Text = "# of episodes: " + se.episodes.Length;
+                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
+                    c = 1;
+                    break;
+
+                case 0:
+                    a = app[e.Node.Text];
+                    progressBar3.Value = 0;
+                    progressBar2.Value = (int)a.recalculateProgress();
+                    label4.Text = (int)a.progress + "%";
+                    label5.Text = "0%";
+                    infoLabel1.Text = "# of seasons: " + a.seasons.Length;
+                    infoLabel2.Text = "# of episodes: " + a.episodes.Length;
+                    infoLabel3.Text = "Amount watched: " + (a.progress / 100) * a.episodes.Length + "/" + a.episodes.Length;
+                    break;
             }
-            if (e.Node.Level == 1)
+            if (openPath != null)
             {
-                Season se = ase[app[e.Node.Parent.Text]][e.Node.Nodes[0].Text].season;
-                progressBar3.Value = (int)se.recalculateProgress();
-                progressBar2.Value = (int)se.anime.recalculateProgress();
-                label4.Text = (int)se.anime.progress + "%";
-                label5.Text = (int)se.progress + "%";
-            }
-            if (e.Node.Level == 0)
-            {
-                progressBar3.Value = 0;
-                progressBar2.Value = (int)app[e.Node.Text].recalculateProgress();
-                label4.Text = (int)app[e.Node.Text].progress + "%";
-                label5.Text = "0%";
+                {
+                    imageBox.Visible = true;
+                    if (imageBox.Image != null) imageBox.Image.Dispose();
+                    imageText.Visible = true;
+                    imageButton.Visible = true;
+                    imageButton.Enabled = true;
+                }
+                string p = Path.GetDirectoryName(openPath) + @"\";
+                string q = null;
+                switch (c)
+                {
+                    case 2:
+                        Season s = ep.season;
+                        a = ep.anime;
+                        q = p + a.imagePath + @"\" + s.id + ".png";
+                        break;
+
+                    case 1:
+                        a = se.anime;
+                        q = p + a.imagePath + @"\" + se.id + ".png";
+                        break;
+
+                    case 0:
+                        q = p + a.imagePath + @"\a.png";
+                        break;
+                }
+                Console.WriteLine(q);
+                if (File.Exists(q))
+                {
+                    imageBox.Image = Image.FromFile(q);
+                    imageText.Text = a.imagePath;
+                }
+                else
+                {
+                    imageBox.Image = null;
+                }
             }
         }
 
@@ -266,6 +325,28 @@ namespace Animanager2
                 toggle(q);
                 ept.Add(c, q);
             }
+        }
+
+        private void setImagePath(object sender, EventArgs e)
+        {
+            Anime a = null;
+            TreeNode node = fileTree.SelectedNode;
+            if (node == null) return;
+            switch (node.Level)
+            {
+                case 2:
+                    a = ase[app[node.Parent.Parent.Text]][node.Text].anime;
+                    break;
+
+                case 1:
+                    a = ase[app[node.Parent.Text]][node.Nodes[0].Text].anime;
+                    break;
+
+                case 0:
+                    a = app[node.Text];
+                    break;
+            }
+            a.imagePath = imageText.Text;
         }
     }
 }

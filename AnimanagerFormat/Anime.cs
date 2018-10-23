@@ -10,6 +10,7 @@ namespace AnimanagerFormat
         public Episode[] episodes;
         public bool manga = false;
         public float progress = 0;
+        public string imagePath = null;
 
         public Anime(string n)
         {

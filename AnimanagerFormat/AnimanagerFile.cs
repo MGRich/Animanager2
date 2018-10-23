@@ -47,12 +47,19 @@ namespace AnimanagerFormat
                 while (true)
                 {
                     string b = rs();
-                    Anime q = new Anime(b);
+                    string t = rs();
+                    Anime q = new Anime(b)
+                    {
+                        imagePath = t
+                    };
                     List<Season> x = new List<Season>();
                     while (true)
                     {
                         string c = rs();
-                        Season w = new Season(c, q);
+                        Season w = new Season(c, q)
+                        {
+                            id = (byte)s.ReadByte()
+                        };
                         List<Episode> y = new List<Episode>();
                         while (true)
                         {
@@ -96,10 +103,12 @@ namespace AnimanagerFormat
             {
                 a.AddRange(Encoding.Default.GetBytes(x.name));
                 a.Add(0);
+                a.AddRange(Encoding.Default.GetBytes(x.imagePath));
+                a.Add(0);
                 foreach (Season y in x.seasons)
                 {
                     a.AddRange(Encoding.Default.GetBytes(y.name));
-                    a.Add(0);
+                    a.AddRange(new byte[2] { 0, y.id });
                     foreach (Episode z in y.episodes)
                     {
                         a.AddRange(Encoding.Default.GetBytes(z.name));
