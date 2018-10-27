@@ -87,8 +87,8 @@ namespace Animanager2
                     label4.Text = (int)se.anime.progress + "%";
                     label5.Text = (int)se.progress + "%";
                     infoLabel1.Text = "Anime: " + se.anime.name;
-                    infoLabel2.Text = "# of episodes: " + se.episodes.Length;
-                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
+                    infoLabel2.Text = "# of episodes: " + se.episodes.Count;
+                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Count + "/" + se.episodes.Count;
                     c = 1;
                     break;
 
@@ -111,24 +111,35 @@ namespace Animanager2
                     imageText.Visible = true;
                     imageButton.Visible = true;
                     imageButton.Enabled = true;
+                    imageIDNum.Visible = true;
+                    imageIDButton.Visible = true;
+                    imageIDButton.Enabled = true;
+                    imageIDLabel.Visible = true;
                 }
                 string p = Path.GetDirectoryName(openPath) + @"\";
                 string q = null;
                 switch (c)
                 {
                     case 2:
-                        Season s = ep.season;
-                        a = ep.anime;
-                        q = p + a.imagePath + @"\" + s.id + ".png";
-                        break;
+                        se = ep.season;
+                        goto case 1;
 
                     case 1:
                         a = se.anime;
+                        imageIDNum.Value = se.id;
                         q = p + a.imagePath + @"\" + se.id + ".png";
+                        if (!File.Exists(q))
+                        {
+                            goto case 0;
+                        }
                         break;
 
                     case 0:
                         q = p + a.imagePath + @"\a.png";
+                        imageIDNum.Visible = false;
+                        imageIDButton.Visible = false;
+                        imageIDButton.Enabled = false;
+                        imageIDLabel.Visible = false;
                         break;
                 }
                 Console.WriteLine(q);
@@ -147,14 +158,18 @@ namespace Animanager2
         private void openCompact(Anime a)
         {
             CompactDisplay compact = new CompactDisplay(ase, a);
+            Size = new Size(255, 39);
+            Size q = Screen.FromControl(this).Bounds.Size;
+            Point k = Location;
+            Location = new Point(q.Width - 249, q.Height - 34);
             compact.ShowDialog();
             ase[a] = compact.se;
             foreach (Episode ep in ase[a].Values)
             {
                 TreeNode node = ept[ep];
                 node.ForeColor = ep.watched ? Color.Green : Color.Red;
-                progressBar2.Value = (int)ep.season.recalculateProgress();
-                progressBar3.Value = (int)ep.anime.recalculateProgress();
+                progressBar3.Value = (int)ep.season.recalculateProgress();
+                progressBar2.Value = (int)ep.anime.recalculateProgress();
                 label4.Text = (int)ep.anime.progress + "%";
                 label5.Text = (int)ep.season.progress + "%";
                 Season y = ep.season;
@@ -170,6 +185,8 @@ namespace Animanager2
                 r = 127 - r;
                 node.Parent.Parent.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
             }
+            Size = new Size(660, 501);
+            Location = k;
         }
 
         private void saveAs(object sender, EventArgs e)
@@ -347,6 +364,34 @@ namespace Animanager2
                     break;
             }
             a.imagePath = imageText.Text;
+            selectNode(sender, new TreeViewEventArgs(node));
+        }
+
+        private void setID(object sender, EventArgs e)
+        {
+            Season s = null;
+            TreeNode node = fileTree.SelectedNode;
+            if (node == null) return;
+            switch (node.Level)
+            {
+                case 2:
+                    s = ase[app[node.Parent.Parent.Text]][node.Text].season;
+                    break;
+
+                case 1:
+                    s = ase[app[node.Parent.Text]][node.Nodes[0].Text].season;
+                    break;
+
+                case 0:
+                    return;
+            }
+            s.id = (byte)imageIDNum.Value;
+            selectNode(sender, new TreeViewEventArgs(node));
+        }
+
+        private void tests(object sender, EventArgs e)
+        {
+            Console.WriteLine(Size.Width + " " + Size.Height);
         }
     }
 }

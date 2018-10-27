@@ -1,35 +1,40 @@
-﻿namespace AnimanagerFormat
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AnimanagerFormat
 {
     public class Season
     {
         public string name;
-        public Episode[] episodes;
+        public List<Episode> episodes = new List<Episode>();
         public Anime anime;
         public float progress = 0;
         public byte id = 0;
 
         public Season(Episode e)
         {
-            episodes = new Episode[1] { e };
+            episodes.Add(e);
         }
 
         public Season(string n)
         {
             name = n;
-            episodes = new Episode[0];
         }
 
         public Season(string n, Episode[] e)
         {
             name = n;
-            episodes = e;
+            episodes = e.ToList();
             recalculateProgress();
         }
 
         public Season(string n, Episode[] e, Anime a)
         {
             name = n;
-            episodes = e;
+            episodes = e.ToList();
             anime = a;
             recalculateProgress();
         }
@@ -44,21 +49,25 @@
                     p++;
                 }
             }
-            progress = (p / episodes.Length) * 100;
+            progress = (p / episodes.Count) * 100;
             return progress;
         }
 
         public Season(string n, Anime a)
         {
             name = n;
-            episodes = new Episode[0];
             anime = a;
         }
 
         public void setEpisodes(Episode[] e)
         {
-            episodes = e;
+            episodes = e.ToList();
             recalculateProgress();
+        }
+
+        public void setEpisodes(List<Episode> e)
+        {
+            setEpisodes(e.ToArray());
         }
     }
 }

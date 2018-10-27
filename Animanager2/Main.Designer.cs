@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.openButton = new System.Windows.Forms.Button();
             this.saveAsButton = new System.Windows.Forms.Button();
             this.fileTree = new System.Windows.Forms.TreeView();
@@ -52,9 +54,14 @@
             this.infoLabel1 = new System.Windows.Forms.Label();
             this.imageButton = new System.Windows.Forms.Button();
             this.imageText = new System.Windows.Forms.TextBox();
+            this.imageIDNum = new System.Windows.Forms.NumericUpDown();
+            this.imageIDButton = new System.Windows.Forms.Button();
+            this.imageIDLabel = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).BeginInit();
             this.SuspendLayout();
             // 
             // openButton
@@ -81,7 +88,7 @@
             // 
             this.fileTree.Location = new System.Drawing.Point(12, 12);
             this.fileTree.Name = "fileTree";
-            this.fileTree.Size = new System.Drawing.Size(185, 426);
+            this.fileTree.Size = new System.Drawing.Size(185, 438);
             this.fileTree.TabIndex = 3;
             this.fileTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
             this.fileTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.nodeDoubleClick);
@@ -166,9 +173,9 @@
             this.addBox.Controls.Add(this.episodeRB);
             this.addBox.Controls.Add(this.seasonRB);
             this.addBox.Controls.Add(this.animeRB);
-            this.addBox.Location = new System.Drawing.Point(203, 348);
+            this.addBox.Location = new System.Drawing.Point(203, 356);
             this.addBox.Name = "addBox";
-            this.addBox.Size = new System.Drawing.Size(206, 90);
+            this.addBox.Size = new System.Drawing.Size(206, 94);
             this.addBox.TabIndex = 19;
             this.addBox.TabStop = false;
             this.addBox.Text = "Add";
@@ -238,9 +245,9 @@
             this.groupBox1.Controls.Add(this.infoLabel3);
             this.groupBox1.Controls.Add(this.infoLabel2);
             this.groupBox1.Controls.Add(this.infoLabel1);
-            this.groupBox1.Location = new System.Drawing.Point(416, 349);
+            this.groupBox1.Location = new System.Drawing.Point(416, 356);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(216, 89);
+            this.groupBox1.Size = new System.Drawing.Size(216, 94);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
@@ -290,11 +297,54 @@
             this.imageText.TabIndex = 23;
             this.imageText.Visible = false;
             // 
+            // imageIDNum
+            // 
+            this.imageIDNum.Location = new System.Drawing.Point(363, 330);
+            this.imageIDNum.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.imageIDNum.Name = "imageIDNum";
+            this.imageIDNum.Size = new System.Drawing.Size(40, 20);
+            this.imageIDNum.TabIndex = 24;
+            this.imageIDNum.Visible = false;
+            // 
+            // imageIDButton
+            // 
+            this.imageIDButton.Enabled = false;
+            this.imageIDButton.Location = new System.Drawing.Point(409, 329);
+            this.imageIDButton.Name = "imageIDButton";
+            this.imageIDButton.Size = new System.Drawing.Size(52, 22);
+            this.imageIDButton.TabIndex = 25;
+            this.imageIDButton.Text = "Set ID";
+            this.imageIDButton.UseVisualStyleBackColor = true;
+            this.imageIDButton.Visible = false;
+            this.imageIDButton.Click += new System.EventHandler(this.setID);
+            // 
+            // imageIDLabel
+            // 
+            this.imageIDLabel.AutoSize = true;
+            this.imageIDLabel.Location = new System.Drawing.Point(206, 333);
+            this.imageIDLabel.Name = "imageIDLabel";
+            this.imageIDLabel.Size = new System.Drawing.Size(151, 13);
+            this.imageIDLabel.TabIndex = 26;
+            this.imageIDLabel.Text = "(ID is used for selecting image)";
+            this.imageIDLabel.Visible = false;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 26);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 450);
+            this.ClientSize = new System.Drawing.Size(644, 462);
+            this.Controls.Add(this.imageIDLabel);
+            this.Controls.Add(this.imageIDButton);
+            this.Controls.Add(this.imageIDNum);
             this.Controls.Add(this.imageText);
             this.Controls.Add(this.imageButton);
             this.Controls.Add(this.groupBox1);
@@ -311,13 +361,16 @@
             this.Controls.Add(this.fileTree);
             this.Controls.Add(this.saveAsButton);
             this.Controls.Add(this.openButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "Animanager2";
+            this.ResizeEnd += new System.EventHandler(this.tests);
             this.addBox.ResumeLayout(false);
             this.addBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -348,6 +401,10 @@
         private System.Windows.Forms.Label infoLabel1;
         private System.Windows.Forms.Button imageButton;
         private System.Windows.Forms.TextBox imageText;
+        private System.Windows.Forms.NumericUpDown imageIDNum;
+        private System.Windows.Forms.Button imageIDButton;
+        private System.Windows.Forms.Label imageIDLabel;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }
 

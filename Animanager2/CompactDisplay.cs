@@ -19,6 +19,7 @@ namespace Animanager2
             se = e[a];
             so = e[a];
             InitializeComponent();
+            TopMost = pinCheck.Checked; 
             foreach (Season y in a.seasons)
             {
                 TreeNode w = treeView1.Nodes.Add(y.name);
