@@ -20,6 +20,8 @@ namespace Animanager2
         private Dictionary<Episode, TreeNode> ept = new Dictionary<Episode, TreeNode>();
         private Dictionary<string, Anime> app = new Dictionary<string, Anime>();
 
+        private TreeNode rcl = null;
+
         public Main()
         {
             InitializeComponent();
@@ -87,8 +89,8 @@ namespace Animanager2
                     label4.Text = (int)se.anime.progress + "%";
                     label5.Text = (int)se.progress + "%";
                     infoLabel1.Text = "Anime: " + se.anime.name;
-                    infoLabel2.Text = "# of episodes: " + se.episodes.Count;
-                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Count + "/" + se.episodes.Count;
+                    infoLabel2.Text = "# of episodes: " + se.episodes.Length;
+                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
                     c = 1;
                     break;
 
@@ -191,7 +193,10 @@ namespace Animanager2
 
         private void saveAs(object sender, EventArgs e)
         {
-            SaveFileDialog open = new SaveFileDialog();
+            SaveFileDialog open = new SaveFileDialog()
+            {
+                Filter = "Animanager File|*.amg"
+            };
             if (open.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -202,7 +207,10 @@ namespace Animanager2
 
         private void open(object sender, EventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
+            OpenFileDialog open = new OpenFileDialog()
+            {
+                Filter = "Animanager File|*.amg"
+            };
             if (open.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -392,6 +400,118 @@ namespace Animanager2
         private void tests(object sender, EventArgs e)
         {
             Console.WriteLine(Size.Width + " " + Size.Height);
+        }
+
+        private void nodeContextMenu(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            rcl = e.Node;
+            //generalMenu.Show(Cursor.Position);
+            delete(sender, e);
+        }
+
+        private void delete(object sender, EventArgs q)
+        {
+            if (MessageBox.Show("Are you sure you want to delete this anime, season, or episode?\nThis action cannot be undone.", "Delete Conformation", MessageBoxButtons.YesNo) == DialogResult.No) return;
+            switch (rcl.Level)
+            {
+                case 0:
+                    Anime a = app[rcl.Text];
+                    Season[] sl = a.seasons;
+                    Episode[] el = a.episodes;
+                    foreach (Episode e in el)
+                    {
+                        ept[e].Remove();
+                        ept.Remove(e);
+                    }
+                    TreeNode[] rn = rcl.Nodes.Cast<TreeNode>().ToArray();
+                    foreach (TreeNode sn in rn)
+                    {
+                        sn.Remove();
+                    }
+                    ase.Remove(a);
+                    app.Remove(rcl.Text);
+                    rcl.Remove();
+                    break;
+
+                case 1:
+                    Anime a2 = app[rcl.Parent.Text];
+                    Season s = ase[a2][rcl.Nodes[0].Text].season;
+                    List<Episode> el2 = a2.episodes.ToList();
+                    foreach (Episode e in s.episodes)
+                    {
+                        ase[a2].Remove(e.name);
+                        ept[e].Remove();
+                        ept.Remove(e);
+                        el2.Remove(e);
+                    }
+                    a2.setEpisodes(el2.ToArray());
+                    List<Season> sl2 = a2.seasons.ToList();
+                    sl2.Remove(s);
+                    rcl.Remove();
+                    a2.setSeasons(sl2.ToArray());
+                    break;
+
+                case 2:
+                    Anime a3 = app[rcl.Parent.Parent.Text];
+                    Episode e2 = ase[a3][rcl.Text];
+                    Season s2 = e2.season;
+                    List<Episode> el3 = a3.episodes.ToList();
+                    List<Episode> el4 = s2.episodes.ToList();
+                    ase[a3].Remove(e2.name);
+                    ept[e2].Remove();
+                    ept.Remove(e2);
+                    el3.Remove(e2);
+                    el4.Remove(e2);
+                    a3.setEpisodes(el3.ToArray());
+                    s2.setEpisodes(el4.ToArray());
+                    rcl.Remove();
+                    break;
+            }
+        }
+
+        private void rename(object sender, NodeLabelEditEventArgs q)
+        {
+            Console.WriteLine(q.CancelEdit);
+            if (q.CancelEdit) return;
+            rcl = q.Node;
+            if (q.Label == null) return;
+            switch (rcl.Level)
+            {
+                case 0:
+                    Anime a = app[rcl.Text];
+                    a.name = q.Label;
+                    app.Remove(rcl.Text);
+                    app.Add(q.Label, a);
+                    break;
+
+                case 1:
+                    Anime a2 = app[rcl.Parent.Text];
+                    Season s = ase[app[rcl.Parent.Text]][rcl.Nodes[0].Text].season;
+                    List<Season> sl = a2.seasons.ToList();
+                    sl.Remove(s);
+                    s.name = q.Label;
+                    sl.Add(s);
+                    foreach (Episode e in s.episodes) e.season = s;
+                    break;
+
+                case 2:
+                    Anime a3 = app[rcl.Parent.Parent.Text];
+                    Episode e2 = ase[a3][rcl.Text];
+                    Season s2 = e2.season;
+                    List<Episode> el3 = a3.episodes.ToList();
+                    List<Episode> el4 = s2.episodes.ToList();
+                    ase[a3].Remove(e2.name);
+                    ept.Remove(e2);
+                    el3.Remove(e2);
+                    el4.Remove(e2);
+                    e2.name = q.Label;
+                    ase[a3].Add(e2.name, e2);
+                    ept.Add(e2, rcl);
+                    el3.Add(e2);
+                    el4.Add(e2);
+                    break;
+            }
         }
     }
 }

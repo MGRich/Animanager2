@@ -9,14 +9,14 @@ namespace AnimanagerFormat
     public class Season
     {
         public string name;
-        public List<Episode> episodes = new List<Episode>();
+        public Episode[] episodes;
         public Anime anime;
         public float progress = 0;
         public byte id = 0;
 
         public Season(Episode e)
         {
-            episodes.Add(e);
+            episodes = new Episode[1] { e };
         }
 
         public Season(string n)
@@ -27,14 +27,14 @@ namespace AnimanagerFormat
         public Season(string n, Episode[] e)
         {
             name = n;
-            episodes = e.ToList();
+            episodes = e;
             recalculateProgress();
         }
 
         public Season(string n, Episode[] e, Anime a)
         {
             name = n;
-            episodes = e.ToList();
+            episodes = e;
             anime = a;
             recalculateProgress();
         }
@@ -49,7 +49,7 @@ namespace AnimanagerFormat
                     p++;
                 }
             }
-            progress = (p / episodes.Count) * 100;
+            progress = (p / episodes.Length) * 100;
             return progress;
         }
 
@@ -61,7 +61,7 @@ namespace AnimanagerFormat
 
         public void setEpisodes(Episode[] e)
         {
-            episodes = e.ToList();
+            episodes = e;
             recalculateProgress();
         }
 

@@ -103,7 +103,7 @@ namespace AnimanagerFormat
             {
                 a.AddRange(Encoding.Default.GetBytes(x.name));
                 a.Add(0);
-                a.AddRange(Encoding.Default.GetBytes(x.imagePath));
+                if (x.imagePath != null) a.AddRange(Encoding.Default.GetBytes(x.imagePath)); else a.Add(0);
                 a.Add(0);
                 foreach (Season y in x.seasons)
                 {

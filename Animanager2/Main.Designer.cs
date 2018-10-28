@@ -57,11 +57,14 @@
             this.imageIDNum = new System.Windows.Forms.NumericUpDown();
             this.imageIDButton = new System.Windows.Forms.Button();
             this.imageIDLabel = new System.Windows.Forms.Label();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.generalMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteMenuButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.addBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).BeginInit();
+            this.generalMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // openButton
@@ -86,11 +89,15 @@
             // 
             // fileTree
             // 
+            this.fileTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.fileTree.LabelEdit = true;
             this.fileTree.Location = new System.Drawing.Point(12, 12);
             this.fileTree.Name = "fileTree";
             this.fileTree.Size = new System.Drawing.Size(185, 438);
             this.fileTree.TabIndex = 3;
+            this.fileTree.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.rename);
             this.fileTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.selectNode);
+            this.fileTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.nodeContextMenu);
             this.fileTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.nodeDoubleClick);
             // 
             // progressBar2
@@ -332,10 +339,26 @@
             this.imageIDLabel.Text = "(ID is used for selecting image)";
             this.imageIDLabel.Visible = false;
             // 
-            // contextMenuStrip1
+            // generalMenu
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 26);
+            this.generalMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteMenuButton,
+            this.renameMenuButton});
+            this.generalMenu.Name = "contextMenuStrip1";
+            this.generalMenu.Size = new System.Drawing.Size(118, 48);
+            // 
+            // deleteMenuButton
+            // 
+            this.deleteMenuButton.Name = "deleteMenuButton";
+            this.deleteMenuButton.Size = new System.Drawing.Size(117, 22);
+            this.deleteMenuButton.Text = "Delete";
+            this.deleteMenuButton.Click += new System.EventHandler(this.delete);
+            // 
+            // renameMenuButton
+            // 
+            this.renameMenuButton.Name = "renameMenuButton";
+            this.renameMenuButton.Size = new System.Drawing.Size(117, 22);
+            this.renameMenuButton.Text = "Rename";
             // 
             // Main
             // 
@@ -371,6 +394,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).EndInit();
+            this.generalMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,7 +428,9 @@
         private System.Windows.Forms.NumericUpDown imageIDNum;
         private System.Windows.Forms.Button imageIDButton;
         private System.Windows.Forms.Label imageIDLabel;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip generalMenu;
+        private System.Windows.Forms.ToolStripMenuItem deleteMenuButton;
+        private System.Windows.Forms.ToolStripMenuItem renameMenuButton;
     }
 }
 
