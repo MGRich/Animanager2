@@ -159,12 +159,17 @@ namespace Animanager2
 
         private void openCompact(Anime a)
         {
-            CompactDisplay compact = new CompactDisplay(ase, a);
+            CompactDisplay compact = new CompactDisplay(ase, a)
+            {
+                Text = a.name
+            };
             Size = new Size(255, 39);
             Size q = Screen.FromControl(this).Bounds.Size;
             Point k = Location;
             Location = new Point(q.Width - 249, q.Height - 34);
+            Visible = false;
             compact.ShowDialog();
+            Visible = true;
             ase[a] = compact.se;
             foreach (Episode ep in ase[a].Values)
             {
@@ -512,6 +517,11 @@ namespace Animanager2
                     el4.Add(e2);
                     break;
             }
+        }
+
+        private void aboutClick(object sender, EventArgs e)
+        {
+            new About().ShowDialog();
         }
     }
 }
