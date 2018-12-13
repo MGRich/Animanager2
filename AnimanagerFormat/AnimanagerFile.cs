@@ -11,6 +11,11 @@ namespace AnimanagerFormat
     {
         public Anime[] animes;
 
+        public AnimanagerFile()
+        {
+            //do nothing, use as category
+        }
+
         public AnimanagerFile(string s)
         {
             Load(File.OpenRead(s));

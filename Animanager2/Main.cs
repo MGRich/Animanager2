@@ -10,7 +10,6 @@ namespace Animanager2
 {
     public partial class Main : Form
     {
-        private AnimanagerFile openFile;
         private string openPath = null;
         private int ni = 0;
 
@@ -59,7 +58,7 @@ namespace Animanager2
         private void save(object sender, EventArgs e)
         {
             if (openPath == null) saveAs(sender, e);
-            else openFile.write(openPath);
+            else new AnimanagerFile(ase.Keys.ToArray()).write(openPath);
         }
 
         private void selectNode(object sender, TreeViewEventArgs e)
@@ -197,24 +196,12 @@ namespace Animanager2
                 Filter = "Animanager File|*.amg"
             };
             if (open.ShowDialog() != DialogResult.OK) return;
-            openFile = new AnimanagerFile(ase.Keys.ToArray());
-            openFile.write(open.FileName);
+            new AnimanagerFile(ase.Keys.ToArray()).write(open.FileName);
         }
 
-        private void open(object sender, EventArgs e)
+        private void parse(AnimanagerFile file)
         {
-            OpenFileDialog open = new OpenFileDialog()
-            {
-                Filter = "Animanager File|*.amg"
-            };
-            if (open.ShowDialog() != DialogResult.OK) return;
-            openFile = new AnimanagerFile(open.FileName);
-            openPath = open.FileName;
-            fileTree.Nodes.Clear();
-            app.Clear();
-            ase.Clear();
-            ni = 0;
-            foreach (Anime x in openFile.animes)
+            foreach (Anime x in file.animes)
             {
                 Console.WriteLine(x.name);
                 app.Add(x.name, x);
@@ -242,6 +229,21 @@ namespace Animanager2
                 }
                 ase.Add(x, t2);
             }
+        }
+
+        private void open(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog()
+            {
+                Filter = "Animanager File|*.amg"
+            };
+            if (open.ShowDialog() != DialogResult.OK) return;
+            openPath = open.FileName;
+            fileTree.Nodes.Clear();
+            app.Clear();
+            ase.Clear();
+            ni = 0;
+            parse(new AnimanagerFile(open.FileName));
         }
 
         private void add(object sender, EventArgs e)
@@ -495,6 +497,20 @@ namespace Animanager2
         private void aboutClick(object sender, EventArgs e)
         {
             new About().ShowDialog();
+        }
+
+        private void merge(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog()
+            {
+                Filter = "Animanager File|*.amg"
+            };
+            open.Multiselect = true;
+            if (open.ShowDialog() != DialogResult.OK) return;
+            foreach (string x in open.FileNames)
+            {
+                parse(new AnimanagerFile(x));
+            }
         }
     }
 }

@@ -62,6 +62,8 @@
             this.saveAsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.imageBox = new System.Windows.Forms.PictureBox();
+            this.openNormally = new System.Windows.Forms.ToolStripMenuItem();
+            this.mergeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.addBox.SuspendLayout();
             this.infoBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).BeginInit();
@@ -337,10 +339,12 @@
             // 
             // openButton
             // 
+            this.openButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openNormally,
+            this.mergeButton});
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(180, 22);
-            this.openButton.Text = "Open";
-            this.openButton.Click += new System.EventHandler(this.open);
+            this.openButton.Text = "Open...";
             // 
             // saveButton
             // 
@@ -373,6 +377,20 @@
             this.imageBox.TabIndex = 20;
             this.imageBox.TabStop = false;
             this.imageBox.Visible = false;
+            // 
+            // openNormally
+            // 
+            this.openNormally.Name = "openNormally";
+            this.openNormally.Size = new System.Drawing.Size(180, 22);
+            this.openNormally.Text = "Normally";
+            this.openNormally.Click += new System.EventHandler(this.open);
+            // 
+            // mergeButton
+            // 
+            this.mergeButton.Name = "mergeButton";
+            this.mergeButton.Size = new System.Drawing.Size(180, 22);
+            this.mergeButton.Text = "Merge to Current";
+            this.mergeButton.Click += new System.EventHandler(this.merge);
             // 
             // Main
             // 
@@ -447,6 +465,8 @@
         private System.Windows.Forms.ToolStripMenuItem saveButton;
         private System.Windows.Forms.ToolStripMenuItem saveAsButton;
         private System.Windows.Forms.ToolStripMenuItem aboutButton;
+        private System.Windows.Forms.ToolStripMenuItem openNormally;
+        private System.Windows.Forms.ToolStripMenuItem mergeButton;
     }
 }
 
