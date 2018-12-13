@@ -29,64 +29,63 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.iconBox = new System.Windows.Forms.PictureBox();
+            this.logoBox = new System.Windows.Forms.PictureBox();
+            this.aboutLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox2
+            // iconBox
             // 
-            this.pictureBox2.Image = global::Animanager2.Properties.Resources.animanager;
-            this.pictureBox2.Location = new System.Drawing.Point(13, 95);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(76, 76);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
+            this.iconBox.Image = global::Animanager2.Properties.Resources.animanager;
+            this.iconBox.Location = new System.Drawing.Point(13, 95);
+            this.iconBox.Name = "iconBox";
+            this.iconBox.Size = new System.Drawing.Size(76, 76);
+            this.iconBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconBox.TabIndex = 1;
+            this.iconBox.TabStop = false;
             // 
-            // pictureBox1
+            // logoBox
             // 
-            this.pictureBox1.Image = global::Animanager2.Properties.Resources.Rver5GIT;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(76, 76);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.logoBox.Image = global::Animanager2.Properties.Resources.Rver5GIT;
+            this.logoBox.Location = new System.Drawing.Point(13, 13);
+            this.logoBox.Name = "logoBox";
+            this.logoBox.Size = new System.Drawing.Size(76, 76);
+            this.logoBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.logoBox.TabIndex = 0;
+            this.logoBox.TabStop = false;
             // 
-            // label1
+            // aboutLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(95, 31);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(249, 117);
-            this.label1.TabIndex = 2;
-            this.label1.Text = resources.GetString("label1.Text");
+            this.aboutLabel.Location = new System.Drawing.Point(95, 13);
+            this.aboutLabel.Name = "aboutLabel";
+            this.aboutLabel.Size = new System.Drawing.Size(249, 161);
+            this.aboutLabel.TabIndex = 2;
+            this.aboutLabel.Text = resources.GetString("aboutLabel.Text");
+            this.aboutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(351, 183);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.aboutLabel);
+            this.Controls.Add(this.iconBox);
+            this.Controls.Add(this.logoBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "About";
             this.Text = "About";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.logoBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox logoBox;
+        private System.Windows.Forms.PictureBox iconBox;
+        private System.Windows.Forms.Label aboutLabel;
     }
 }

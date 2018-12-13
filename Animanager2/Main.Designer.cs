@@ -31,19 +31,19 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.fileTree = new System.Windows.Forms.TreeView();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.progressBar3 = new System.Windows.Forms.ProgressBar();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.animeBar = new System.Windows.Forms.ProgressBar();
+            this.animeLabel = new System.Windows.Forms.Label();
+            this.seasonLabel = new System.Windows.Forms.Label();
+            this.seasonBar = new System.Windows.Forms.ProgressBar();
+            this.animePercent = new System.Windows.Forms.Label();
+            this.seasonPercent = new System.Windows.Forms.Label();
             this.addBox = new System.Windows.Forms.GroupBox();
             this.okButton = new System.Windows.Forms.Button();
             this.addText = new System.Windows.Forms.TextBox();
             this.episodeRB = new System.Windows.Forms.RadioButton();
             this.seasonRB = new System.Windows.Forms.RadioButton();
             this.animeRB = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.infoBox = new System.Windows.Forms.GroupBox();
             this.infoLabel3 = new System.Windows.Forms.Label();
             this.infoLabel2 = new System.Windows.Forms.Label();
             this.infoLabel1 = new System.Windows.Forms.Label();
@@ -56,14 +56,14 @@
             this.deleteMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.renameMenuButton = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.openButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
             this.imageBox = new System.Windows.Forms.PictureBox();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.infoBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).BeginInit();
             this.generalMenu.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -83,59 +83,59 @@
             this.fileTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.nodeContextMenu);
             this.fileTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.nodeDoubleClick);
             // 
-            // progressBar2
+            // animeBar
             // 
-            this.progressBar2.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.progressBar2.Location = new System.Drawing.Point(209, 34);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(375, 23);
-            this.progressBar2.Step = 20;
-            this.progressBar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar2.TabIndex = 5;
+            this.animeBar.ForeColor = System.Drawing.SystemColors.GrayText;
+            this.animeBar.Location = new System.Drawing.Point(209, 34);
+            this.animeBar.Name = "animeBar";
+            this.animeBar.Size = new System.Drawing.Size(375, 23);
+            this.animeBar.Step = 20;
+            this.animeBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.animeBar.TabIndex = 5;
             // 
-            // label1
+            // animeLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(592, 34);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Anime";
+            this.animeLabel.AutoSize = true;
+            this.animeLabel.Location = new System.Drawing.Point(592, 34);
+            this.animeLabel.Name = "animeLabel";
+            this.animeLabel.Size = new System.Drawing.Size(36, 13);
+            this.animeLabel.TabIndex = 14;
+            this.animeLabel.Text = "Anime";
             // 
-            // label2
+            // seasonLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(591, 64);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Season";
+            this.seasonLabel.AutoSize = true;
+            this.seasonLabel.Location = new System.Drawing.Point(591, 64);
+            this.seasonLabel.Name = "seasonLabel";
+            this.seasonLabel.Size = new System.Drawing.Size(43, 13);
+            this.seasonLabel.TabIndex = 15;
+            this.seasonLabel.Text = "Season";
             // 
-            // progressBar3
+            // seasonBar
             // 
-            this.progressBar3.Location = new System.Drawing.Point(209, 64);
-            this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(376, 23);
-            this.progressBar3.Step = 20;
-            this.progressBar3.TabIndex = 6;
+            this.seasonBar.Location = new System.Drawing.Point(209, 64);
+            this.seasonBar.Name = "seasonBar";
+            this.seasonBar.Size = new System.Drawing.Size(376, 23);
+            this.seasonBar.Step = 20;
+            this.seasonBar.TabIndex = 6;
             // 
-            // label4
+            // animePercent
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(592, 47);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(21, 13);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "0%";
+            this.animePercent.AutoSize = true;
+            this.animePercent.Location = new System.Drawing.Point(592, 47);
+            this.animePercent.Name = "animePercent";
+            this.animePercent.Size = new System.Drawing.Size(21, 13);
+            this.animePercent.TabIndex = 17;
+            this.animePercent.Text = "0%";
             // 
-            // label5
+            // seasonPercent
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(592, 77);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(21, 13);
-            this.label5.TabIndex = 18;
-            this.label5.Text = "0%";
+            this.seasonPercent.AutoSize = true;
+            this.seasonPercent.Location = new System.Drawing.Point(592, 77);
+            this.seasonPercent.Name = "seasonPercent";
+            this.seasonPercent.Size = new System.Drawing.Size(21, 13);
+            this.seasonPercent.TabIndex = 18;
+            this.seasonPercent.Text = "0%";
             // 
             // addBox
             // 
@@ -200,17 +200,17 @@
             this.animeRB.Text = "Anime";
             this.animeRB.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // infoBox
             // 
-            this.groupBox1.Controls.Add(this.infoLabel3);
-            this.groupBox1.Controls.Add(this.infoLabel2);
-            this.groupBox1.Controls.Add(this.infoLabel1);
-            this.groupBox1.Location = new System.Drawing.Point(416, 392);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(216, 94);
-            this.groupBox1.TabIndex = 21;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Info";
+            this.infoBox.Controls.Add(this.infoLabel3);
+            this.infoBox.Controls.Add(this.infoLabel2);
+            this.infoBox.Controls.Add(this.infoLabel1);
+            this.infoBox.Location = new System.Drawing.Point(416, 392);
+            this.infoBox.Name = "infoBox";
+            this.infoBox.Size = new System.Drawing.Size(216, 94);
+            this.infoBox.TabIndex = 21;
+            this.infoBox.TabStop = false;
+            this.infoBox.Text = "Info";
             // 
             // infoLabel3
             // 
@@ -317,44 +317,51 @@
             // 
             this.menuStrip.BackColor = System.Drawing.SystemColors.ControlLight;
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.aboutToolStripMenuItem});
+            this.fileButton,
+            this.aboutButton});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(639, 24);
             this.menuStrip.TabIndex = 27;
             this.menuStrip.Text = "menuStrip1";
             // 
-            // fileToolStripMenuItem
+            // fileButton
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
+            this.fileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openButton,
+            this.saveButton,
+            this.saveAsButton});
+            this.fileButton.Name = "fileButton";
+            this.fileButton.Size = new System.Drawing.Size(37, 20);
+            this.fileButton.Text = "File";
             // 
-            // openToolStripMenuItem
+            // openButton
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.open);
+            this.openButton.Name = "openButton";
+            this.openButton.Size = new System.Drawing.Size(180, 22);
+            this.openButton.Text = "Open";
+            this.openButton.Click += new System.EventHandler(this.open);
             // 
-            // saveToolStripMenuItem
+            // saveButton
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.save);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(180, 22);
+            this.saveButton.Text = "Save";
+            this.saveButton.Click += new System.EventHandler(this.save);
             // 
-            // saveAsToolStripMenuItem
+            // saveAsButton
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAs);
+            this.saveAsButton.Name = "saveAsButton";
+            this.saveAsButton.Size = new System.Drawing.Size(180, 22);
+            this.saveAsButton.Text = "Save As";
+            this.saveAsButton.Click += new System.EventHandler(this.saveAs);
+            // 
+            // aboutButton
+            // 
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(52, 20);
+            this.aboutButton.Text = "About";
+            this.aboutButton.Click += new System.EventHandler(this.aboutClick);
             // 
             // imageBox
             // 
@@ -367,13 +374,6 @@
             this.imageBox.TabStop = false;
             this.imageBox.Visible = false;
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutClick);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -385,15 +385,15 @@
             this.Controls.Add(this.imageIDNum);
             this.Controls.Add(this.imageText);
             this.Controls.Add(this.imageButton);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.infoBox);
             this.Controls.Add(this.imageBox);
             this.Controls.Add(this.addBox);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.progressBar3);
-            this.Controls.Add(this.progressBar2);
+            this.Controls.Add(this.seasonPercent);
+            this.Controls.Add(this.animePercent);
+            this.Controls.Add(this.seasonLabel);
+            this.Controls.Add(this.animeLabel);
+            this.Controls.Add(this.seasonBar);
+            this.Controls.Add(this.animeBar);
             this.Controls.Add(this.fileTree);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
@@ -402,8 +402,8 @@
             this.ResizeEnd += new System.EventHandler(this.tests);
             this.addBox.ResumeLayout(false);
             this.addBox.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.infoBox.ResumeLayout(false);
+            this.infoBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageIDNum)).EndInit();
             this.generalMenu.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
@@ -416,12 +416,12 @@
 
         #endregion
         private System.Windows.Forms.TreeView fileTree;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ProgressBar progressBar3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ProgressBar animeBar;
+        private System.Windows.Forms.Label animeLabel;
+        private System.Windows.Forms.Label seasonLabel;
+        private System.Windows.Forms.ProgressBar seasonBar;
+        private System.Windows.Forms.Label animePercent;
+        private System.Windows.Forms.Label seasonPercent;
         private System.Windows.Forms.GroupBox addBox;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.TextBox addText;
@@ -429,7 +429,7 @@
         private System.Windows.Forms.RadioButton seasonRB;
         private System.Windows.Forms.RadioButton animeRB;
         private System.Windows.Forms.PictureBox imageBox;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox infoBox;
         private System.Windows.Forms.Label infoLabel3;
         private System.Windows.Forms.Label infoLabel2;
         private System.Windows.Forms.Label infoLabel1;
@@ -442,11 +442,11 @@
         private System.Windows.Forms.ToolStripMenuItem deleteMenuButton;
         private System.Windows.Forms.ToolStripMenuItem renameMenuButton;
         private System.Windows.Forms.MenuStrip menuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileButton;
+        private System.Windows.Forms.ToolStripMenuItem openButton;
+        private System.Windows.Forms.ToolStripMenuItem saveButton;
+        private System.Windows.Forms.ToolStripMenuItem saveAsButton;
+        private System.Windows.Forms.ToolStripMenuItem aboutButton;
     }
 }
 

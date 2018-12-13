@@ -1,8 +1,8 @@
 ﻿using AnimanagerFormat;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,7 +14,6 @@ namespace Animanager2
         private string openPath = null;
         private int ni = 0;
 
-        //private Dictionary<string, Episode> epp = new Dictionary<string, Episode>();
         private Dictionary<Anime, Dictionary<string, Episode>> ase = new Dictionary<Anime, Dictionary<string, Episode>>();
 
         private Dictionary<Episode, TreeNode> ept = new Dictionary<Episode, TreeNode>();
@@ -39,10 +38,10 @@ namespace Animanager2
             ep.watched ^= true;
             infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
             node.ForeColor = ep.watched ? Color.Green : Color.Red;
-            progressBar3.Value = (int)ep.season.recalculateProgress();
-            progressBar2.Value = (int)ep.anime.recalculateProgress();
-            label4.Text = (int)ep.anime.progress + "%";
-            label5.Text = (int)ep.season.progress + "%";
+            seasonBar.Value = (int)ep.season.recalculateProgress();
+            animeBar.Value = (int)ep.anime.recalculateProgress();
+            animePercent.Text = (int)ep.anime.progress + "%";
+            seasonPercent.Text = (int)ep.season.progress + "%";
             Season y = ep.season;
             Anime x = ep.anime;
             double u = y.progress;
@@ -59,7 +58,8 @@ namespace Animanager2
 
         private void save(object sender, EventArgs e)
         {
-            if (openPath == null) saveAs(sender, e); else openFile.write(openPath);
+            if (openPath == null) saveAs(sender, e);
+            else openFile.write(openPath);
         }
 
         private void selectNode(object sender, TreeViewEventArgs e)
@@ -68,42 +68,40 @@ namespace Animanager2
             Season se = null;
             Anime a = null;
             int c = 0;
-            switch (e.Node.Level)
+            if (e.Node.Level == 2)
             {
-                case 2:
-                    ep = ase[app[e.Node.Parent.Parent.Text]][e.Node.Text];
-                    progressBar3.Value = (int)ep.season.recalculateProgress();
-                    progressBar2.Value = (int)ep.anime.recalculateProgress();
-                    label4.Text = (int)ep.anime.progress + "%";
-                    label5.Text = (int)ep.season.progress + "%";
-                    infoLabel1.Text = "Anime: " + ep.anime.name;
-                    infoLabel2.Text = "Season: " + ep.season.name;
-                    infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
-                    c = 2;
-                    break;
-
-                case 1:
-                    se = ase[app[e.Node.Parent.Text]][e.Node.Nodes[0].Text].season;
-                    progressBar3.Value = (int)se.recalculateProgress();
-                    progressBar2.Value = (int)se.anime.recalculateProgress();
-                    label4.Text = (int)se.anime.progress + "%";
-                    label5.Text = (int)se.progress + "%";
-                    infoLabel1.Text = "Anime: " + se.anime.name;
-                    infoLabel2.Text = "# of episodes: " + se.episodes.Length;
-                    infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
-                    c = 1;
-                    break;
-
-                case 0:
-                    a = app[e.Node.Text];
-                    progressBar3.Value = 0;
-                    progressBar2.Value = (int)a.recalculateProgress();
-                    label4.Text = (int)a.progress + "%";
-                    label5.Text = "0%";
-                    infoLabel1.Text = "# of seasons: " + a.seasons.Length;
-                    infoLabel2.Text = "# of episodes: " + a.episodes.Length;
-                    infoLabel3.Text = "Amount watched: " + (a.progress / 100) * a.episodes.Length + "/" + a.episodes.Length;
-                    break;
+                ep = ase[app[e.Node.Parent.Parent.Text]][e.Node.Text];
+                seasonBar.Value = (int)ep.season.recalculateProgress();
+                animeBar.Value = (int)ep.anime.recalculateProgress();
+                animePercent.Text = (int)ep.anime.progress + "%";
+                seasonPercent.Text = (int)ep.season.progress + "%";
+                infoLabel1.Text = "Anime: " + ep.anime.name;
+                infoLabel2.Text = "Season: " + ep.season.name;
+                infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
+                c = 2;
+            }
+            else if (e.Node.Level == 1)
+            {
+                se = ase[app[e.Node.Parent.Text]][e.Node.Nodes[0].Text].season;
+                seasonBar.Value = (int)se.recalculateProgress();
+                animeBar.Value = (int)se.anime.recalculateProgress();
+                animePercent.Text = (int)se.anime.progress + "%";
+                seasonPercent.Text = (int)se.progress + "%";
+                infoLabel1.Text = "Anime: " + se.anime.name;
+                infoLabel2.Text = "# of episodes: " + se.episodes.Length;
+                infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
+                c = 1;
+            }
+            else
+            {
+                a = app[e.Node.Text];
+                seasonBar.Value = 0;
+                animeBar.Value = (int)a.recalculateProgress();
+                animePercent.Text = (int)a.progress + "%";
+                seasonPercent.Text = "0%";
+                infoLabel1.Text = "# of seasons: " + a.seasons.Length;
+                infoLabel2.Text = "# of episodes: " + a.episodes.Length;
+                infoLabel3.Text = "Amount watched: " + (a.progress / 100) * a.episodes.Length + "/" + a.episodes.Length;
             }
             if (openPath != null)
             {
@@ -175,21 +173,17 @@ namespace Animanager2
             {
                 TreeNode node = ept[ep];
                 node.ForeColor = ep.watched ? Color.Green : Color.Red;
-                progressBar3.Value = (int)ep.season.recalculateProgress();
-                progressBar2.Value = (int)ep.anime.recalculateProgress();
-                label4.Text = (int)ep.anime.progress + "%";
-                label5.Text = (int)ep.season.progress + "%";
+                seasonBar.Value = (int)ep.season.recalculateProgress();
+                animeBar.Value = (int)ep.anime.recalculateProgress();
+                animePercent.Text = (int)ep.anime.progress + "%";
+                seasonPercent.Text = (int)ep.season.progress + "%";
                 Season y = ep.season;
                 Anime x = ep.anime;
                 double u = y.progress;
-                u *= 2.55;
-                u /= 2;
-                u = 127 - u;
+                u = 127 - (u * 2.55 / 2);
                 node.Parent.ForeColor = Color.FromArgb((int)u, (int)u, (int)u);
                 double r = x.progress;
-                r *= 2.55;
-                r /= 2;
-                r = 127 - r;
+                r = 127 - (r * 2.55 / 2);
                 node.Parent.Parent.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
             }
             Size = new Size(660, 501);
@@ -202,10 +196,7 @@ namespace Animanager2
             {
                 Filter = "Animanager File|*.amg"
             };
-            if (open.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
+            if (open.ShowDialog() != DialogResult.OK) return;
             openFile = new AnimanagerFile(ase.Keys.ToArray());
             openFile.write(open.FileName);
         }
@@ -216,10 +207,7 @@ namespace Animanager2
             {
                 Filter = "Animanager File|*.amg"
             };
-            if (open.ShowDialog() != DialogResult.OK)
-            {
-                return;
-            }
+            if (open.ShowDialog() != DialogResult.OK) return;
             openFile = new AnimanagerFile(open.FileName);
             openPath = open.FileName;
             fileTree.Nodes.Clear();
@@ -232,9 +220,7 @@ namespace Animanager2
                 app.Add(x.name, x);
                 TreeNode q = fileTree.Nodes.Add(x.name);
                 double r = x.progress;
-                r *= 2.55;
-                r /= 2;
-                r = 127 - r;
+                r = 127 - (r * 2.55 / 2);
                 q.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
                 Dictionary<string, Episode> t2 = new Dictionary<string, Episode>();
                 foreach (Season y in x.seasons)
@@ -242,21 +228,13 @@ namespace Animanager2
                     Console.WriteLine(y.name + "-");
                     TreeNode w = q.Nodes.Add(y.name);
                     double u = y.progress;
-                    /*if (u == 0)
-                    {
-                        u = 1;
-                    }*/
-                    u *= 2.55;
-                    u /= 2;
-                    u = 127 - u;
+                    u = 127 - (u * 2.55 / 2);
                     Console.WriteLine((int)u);
-                    //Console.WriteLine(127 - u);
                     w.ForeColor = Color.FromArgb((int)u, (int)u, (int)u);
                     foreach (Episode z in y.episodes)
                     {
                         Console.WriteLine(z.name + "--" + z.watched);
                         TreeNode i = w.Nodes.Add(z.name);
-                        //epp.Add(z.name, z);
                         ept.Add(z, i);
                         t2.Add(z.name, z);
                         i.ForeColor = z.watched ? Color.Green : Color.Red;
@@ -411,111 +389,106 @@ namespace Animanager2
         {
             if (e.Button != MouseButtons.Right) return;
             rcl = e.Node;
-            //generalMenu.Show(Cursor.Position);
             delete(sender, e);
         }
 
         private void delete(object sender, EventArgs q)
         {
-            if (MessageBox.Show("Are you sure you want to delete this anime, season, or episode?\nThis action cannot be undone.", "Delete Conformation", MessageBoxButtons.YesNo) == DialogResult.No) return;
-            switch (rcl.Level)
+            if (MessageBox.Show("Are you sure you want to delete this anime, season, or episode?\nThis action cannot be undone.",
+                "Delete Conformation", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (rcl.Level == 0)
             {
-                case 0:
-                    Anime a = app[rcl.Text];
-                    Season[] sl = a.seasons;
-                    Episode[] el = a.episodes;
-                    foreach (Episode e in el)
-                    {
-                        ept[e].Remove();
-                        ept.Remove(e);
-                    }
-                    TreeNode[] rn = rcl.Nodes.Cast<TreeNode>().ToArray();
-                    foreach (TreeNode sn in rn)
-                    {
-                        sn.Remove();
-                    }
-                    ase.Remove(a);
-                    app.Remove(rcl.Text);
-                    rcl.Remove();
-                    break;
-
-                case 1:
-                    Anime a2 = app[rcl.Parent.Text];
-                    Season s = ase[a2][rcl.Nodes[0].Text].season;
-                    List<Episode> el2 = a2.episodes.ToList();
-                    foreach (Episode e in s.episodes)
-                    {
-                        ase[a2].Remove(e.name);
-                        ept[e].Remove();
-                        ept.Remove(e);
-                        el2.Remove(e);
-                    }
-                    a2.setEpisodes(el2.ToArray());
-                    List<Season> sl2 = a2.seasons.ToList();
-                    sl2.Remove(s);
-                    rcl.Remove();
-                    a2.setSeasons(sl2.ToArray());
-                    break;
-
-                case 2:
-                    Anime a3 = app[rcl.Parent.Parent.Text];
-                    Episode e2 = ase[a3][rcl.Text];
-                    Season s2 = e2.season;
-                    List<Episode> el3 = a3.episodes.ToList();
-                    List<Episode> el4 = s2.episodes.ToList();
-                    ase[a3].Remove(e2.name);
-                    ept[e2].Remove();
-                    ept.Remove(e2);
-                    el3.Remove(e2);
-                    el4.Remove(e2);
-                    a3.setEpisodes(el3.ToArray());
-                    s2.setEpisodes(el4.ToArray());
-                    rcl.Remove();
-                    break;
+                Anime a = app[rcl.Text];
+                Season[] sl = a.seasons;
+                Episode[] el = a.episodes;
+                foreach (Episode e in el)
+                {
+                    ept[e].Remove();
+                    ept.Remove(e);
+                }
+                TreeNode[] rn = rcl.Nodes.Cast<TreeNode>().ToArray();
+                foreach (TreeNode sn in rn)
+                {
+                    sn.Remove();
+                }
+                ase.Remove(a);
+                app.Remove(rcl.Text);
+                rcl.Remove();
+            }
+            else if (rcl.Level == 1)
+            {
+                Anime a = app[rcl.Parent.Text];
+                Season s = ase[a][rcl.Nodes[0].Text].season;
+                List<Episode> el2 = a.episodes.ToList();
+                foreach (Episode e in s.episodes)
+                {
+                    ase[a].Remove(e.name);
+                    ept[e].Remove();
+                    ept.Remove(e);
+                    el2.Remove(e);
+                }
+                a.setEpisodes(el2.ToArray());
+                List<Season> sl2 = a.seasons.ToList();
+                sl2.Remove(s);
+                rcl.Remove();
+                a.setSeasons(sl2.ToArray());
+            }
+            else
+            {
+                Anime a = app[rcl.Parent.Parent.Text];
+                Episode e = ase[a][rcl.Text];
+                Season s = e.season;
+                List<Episode> el3 = a.episodes.ToList();
+                List<Episode> el4 = s.episodes.ToList();
+                ase[a].Remove(e.name);
+                ept[e].Remove();
+                ept.Remove(e);
+                el3.Remove(e);
+                el4.Remove(e);
+                a.setEpisodes(el3.ToArray());
+                s.setEpisodes(el4.ToArray());
+                rcl.Remove();
             }
         }
 
         private void rename(object sender, NodeLabelEditEventArgs q)
         {
-            Console.WriteLine(q.CancelEdit);
             if (q.CancelEdit) return;
             rcl = q.Node;
             if (q.Label == null) return;
-            switch (rcl.Level)
+            if (rcl.Level == 0)
             {
-                case 0:
-                    Anime a = app[rcl.Text];
-                    a.name = q.Label;
-                    app.Remove(rcl.Text);
-                    app.Add(q.Label, a);
-                    break;
-
-                case 1:
-                    Anime a2 = app[rcl.Parent.Text];
-                    Season s = ase[app[rcl.Parent.Text]][rcl.Nodes[0].Text].season;
-                    List<Season> sl = a2.seasons.ToList();
-                    sl.Remove(s);
-                    s.name = q.Label;
-                    sl.Add(s);
-                    foreach (Episode e in s.episodes) e.season = s;
-                    break;
-
-                case 2:
-                    Anime a3 = app[rcl.Parent.Parent.Text];
-                    Episode e2 = ase[a3][rcl.Text];
-                    Season s2 = e2.season;
-                    List<Episode> el3 = a3.episodes.ToList();
-                    List<Episode> el4 = s2.episodes.ToList();
-                    ase[a3].Remove(e2.name);
-                    ept.Remove(e2);
-                    el3.Remove(e2);
-                    el4.Remove(e2);
-                    e2.name = q.Label;
-                    ase[a3].Add(e2.name, e2);
-                    ept.Add(e2, rcl);
-                    el3.Add(e2);
-                    el4.Add(e2);
-                    break;
+                Anime a = app[rcl.Text];
+                a.name = q.Label;
+                app.Remove(rcl.Text);
+                app.Add(q.Label, a);
+            }
+            else if (rcl.Level == 1)
+            {
+                Anime a = app[rcl.Parent.Text];
+                Season s = ase[app[rcl.Parent.Text]][rcl.Nodes[0].Text].season;
+                List<Season> sl = a.seasons.ToList();
+                sl.Remove(s);
+                s.name = q.Label;
+                sl.Add(s);
+                foreach (Episode e in s.episodes) e.season = s;
+            }
+            else
+            {
+                Anime a = app[rcl.Parent.Parent.Text];
+                Episode e = ase[a][rcl.Text];
+                Season s = e.season;
+                List<Episode> el3 = a.episodes.ToList();
+                List<Episode> el4 = s.episodes.ToList();
+                ase[a].Remove(e.name);
+                ept.Remove(e);
+                el3.Remove(e);
+                el4.Remove(e);
+                e.name = q.Label;
+                ase[a].Add(e.name, e);
+                ept.Add(e, rcl);
+                el3.Add(e);
+                el4.Add(e);
             }
         }
 
