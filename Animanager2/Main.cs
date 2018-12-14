@@ -35,24 +35,38 @@ namespace Animanager2
         {
             Episode ep = ase[app[node.Parent.Parent.Text]][node.Text];
             ep.watched ^= true;
+            calculate(node, ep);
             infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
+        }
+
+        private void calculate(TreeNode node, Episode ep)
+        {
             node.ForeColor = ep.watched ? Color.Green : Color.Red;
+            calcBars(ep);
+            Season y = ep.season;
+            Anime x = ep.anime;
+            double u = y.progress;
+            u = 127 - (u * 2.55 / 2);
+            node.Parent.ForeColor = Color.FromArgb((int)u, (int)u, (int)u);
+            double r = x.progress;
+            r = 127 - (r * 2.55 / 2);
+            node.Parent.Parent.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
+        }
+
+        private void calcBars(Episode ep)
+        {
             seasonBar.Value = (int)ep.season.recalculateProgress();
             animeBar.Value = (int)ep.anime.recalculateProgress();
             animePercent.Text = (int)ep.anime.progress + "%";
             seasonPercent.Text = (int)ep.season.progress + "%";
-            Season y = ep.season;
-            Anime x = ep.anime;
-            double u = y.progress;
-            u *= 2.55;
-            u /= 2;
-            u = 127 - u;
-            node.Parent.ForeColor = Color.FromArgb((int)u, (int)u, (int)u);
-            double r = x.progress;
-            r *= 2.55;
-            r /= 2;
-            r = 127 - r;
-            node.Parent.Parent.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
+        }
+
+        private void calcBars(Season se)
+        {
+            seasonBar.Value = (int)se.recalculateProgress();
+            animeBar.Value = (int)se.anime.recalculateProgress();
+            animePercent.Text = (int)se.anime.progress + "%";
+            seasonPercent.Text = (int)se.progress + "%";
         }
 
         private void save(object sender, EventArgs e)
@@ -70,10 +84,7 @@ namespace Animanager2
             if (e.Node.Level == 2)
             {
                 ep = ase[app[e.Node.Parent.Parent.Text]][e.Node.Text];
-                seasonBar.Value = (int)ep.season.recalculateProgress();
-                animeBar.Value = (int)ep.anime.recalculateProgress();
-                animePercent.Text = (int)ep.anime.progress + "%";
-                seasonPercent.Text = (int)ep.season.progress + "%";
+                calcBars(ep);
                 infoLabel1.Text = "Anime: " + ep.anime.name;
                 infoLabel2.Text = "Season: " + ep.season.name;
                 infoLabel3.Text = "Watched: " + (ep.watched ? "Yes" : "No");
@@ -82,10 +93,7 @@ namespace Animanager2
             else if (e.Node.Level == 1)
             {
                 se = ase[app[e.Node.Parent.Text]][e.Node.Nodes[0].Text].season;
-                seasonBar.Value = (int)se.recalculateProgress();
-                animeBar.Value = (int)se.anime.recalculateProgress();
-                animePercent.Text = (int)se.anime.progress + "%";
-                seasonPercent.Text = (int)se.progress + "%";
+                calcBars(se);
                 infoLabel1.Text = "Anime: " + se.anime.name;
                 infoLabel2.Text = "# of episodes: " + se.episodes.Length;
                 infoLabel3.Text = "Amount watched: " + (se.progress / 100) * se.episodes.Length + "/" + se.episodes.Length;
@@ -171,19 +179,7 @@ namespace Animanager2
             foreach (Episode ep in ase[a].Values)
             {
                 TreeNode node = ept[ep];
-                node.ForeColor = ep.watched ? Color.Green : Color.Red;
-                seasonBar.Value = (int)ep.season.recalculateProgress();
-                animeBar.Value = (int)ep.anime.recalculateProgress();
-                animePercent.Text = (int)ep.anime.progress + "%";
-                seasonPercent.Text = (int)ep.season.progress + "%";
-                Season y = ep.season;
-                Anime x = ep.anime;
-                double u = y.progress;
-                u = 127 - (u * 2.55 / 2);
-                node.Parent.ForeColor = Color.FromArgb((int)u, (int)u, (int)u);
-                double r = x.progress;
-                r = 127 - (r * 2.55 / 2);
-                node.Parent.Parent.ForeColor = Color.FromArgb((int)r, (int)r, (int)r);
+                calculate(node, ep);
             }
             Size = new Size(660, 501);
             Location = k;
@@ -396,6 +392,7 @@ namespace Animanager2
 
         private void delete(object sender, EventArgs q)
         {
+            if (rcl.Parent != null) if (rcl.Parent.Nodes.Count == 1) return;
             if (MessageBox.Show("Are you sure you want to delete this anime, season, or episode?\nThis action cannot be undone.",
                 "Delete Conformation", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             if (rcl.Level == 0)
